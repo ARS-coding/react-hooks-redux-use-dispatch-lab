@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import { addRestaurant } from "./restaurantsSlice";
+import { useDispatch } from "react-redux";
 
 function RestaurantInput() {
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    name: "",
+    location: ""
+  });
 
-  function handleNameChange(event) {
-    setName(event.target.value);
-  }
-
-  function handleLocationChange(event) {
-    setLocation(event.target.value);
+  function handleChange(event) {
+    setFormData({
+      ...formData,
+      [event.target.id]: event.target.value
+    })
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    // add missing code
+    dispatch(addRestaurant(formData));
   }
 
   return (
@@ -23,7 +26,7 @@ function RestaurantInput() {
       <p>
         <input
           type="text"
-          onChange={handleNameChange}
+          onChange={handleChange}
           id="name"
           placeholder="restaurant name"
         />
@@ -31,7 +34,7 @@ function RestaurantInput() {
       <p>
         <input
           type="text"
-          onChange={handleLocationChange}
+          onChange={handleChange}
           id="location"
           placeholder="location"
         />
